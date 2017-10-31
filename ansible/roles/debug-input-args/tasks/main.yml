@@ -1,0 +1,7 @@
+---
+
+- name: input args
+  debug:
+    msg: |
+      'Project: {{ PROJECT }}'
+      'Version: {{ VERSION }}.{{ MINOR }}'

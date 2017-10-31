@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  todo_todo:
+    build:
+      context: ../../apps/todo_todo
+      dockerfile: docker/develop/Dockerfile
+    volumes:
+      - ../../src:/opt/app
+    ports:
+      - 8080:8080
+    command: ['python', 'run_server.py']
+  todo_crm:
+    build:
+      context: ../../apps/todo_crm
+      dockerfile: docker/develop/Dockerfile
+    volumes:
+      - ../../src:/opt/app
+    ports:
+      - 8081:8080
+    environment:
+      TODO_HOST: '127.0.0.1:8080'
+    command: ['python', 'run_server.py']

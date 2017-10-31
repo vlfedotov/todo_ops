@@ -1,0 +1,44 @@
+---
+
+docker_registry: hub.docker.com/vlfedotov
+projects:
+  todo:
+    location: ../../projects/todo
+    
+    makefile: ../../projects/todo/Makefile
+    env_file: ../../projects/todo/env
+    roles:
+      dev:
+        git: ON
+#        location: qw
+        branch: develop
+        docker_compose_run: docker-compose.run.yml
+        hostport: 8001
+      test:
+        git: OFF
+        user: todo-test
+        branch: release
+        hostport: 8002
+      stage:
+        git: OFF
+        user: todo-stage
+        branch: staging
+        hostport: 8003
+      prod:
+        git: OFF
+        user: todo
+        branch: master
+        hostport: 8000
+    repos:
+      - name: todo_crm
+        repo: git@github.com:vlfedotov/todo_crm.git
+        location: apps/todo_crm
+      - name: todo_todo
+        repo: git@github.com:vlfedotov/todo_todo.git
+        location: apps/todo_todo
+    dockers:
+      - image: todo_crm
+        dockerfile_location: ../../projects/todo/backend
+      - image: todo-web
+        dockerfile_location: ../../projects/todo/web
+

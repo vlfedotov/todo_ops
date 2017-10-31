@@ -1,0 +1,37 @@
+---
+
+docker_registry: hub.docker.com/vlfedotov
+projects:
+  todo:
+    location: ../../projects/todo
+    docker_compose_run: ../../projects/todo/docker-compose.run.yml
+    makefile: ../../projects/todo/Makefile
+    env_file: ../../projects/todo/env
+    roles:
+      dev:
+        user: todo-dev
+        hostport: 8001
+      test:
+        user: todo-test
+        hostport: 8002
+      stage:
+        user: todo-stage
+        hostport: 8003
+      prod:
+        user: todo
+        hostport: 8000
+    repos:
+      - name: todo
+        repo: git@github.com:justuswilhelm/todobackend-aiohttp.git
+        default_branch: master
+        location: ../../projects/todo/backend/app
+      - name: todo-ui
+        repo: git@github.com:TodoBackend/todo-backend-client.git
+        default_branch: master
+        location: ../../projects/todo/web/static/app-ui
+    dockers:
+      - image: todo-back
+        dockerfile_location: ../../projects/todo/backend
+      - image: todo-web
+        dockerfile_location: ../../projects/todo/web
+

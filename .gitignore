@@ -1,0 +1,8 @@
+*.pyc
+
+venv
+TAGS
+
+.idea
+
+.cache

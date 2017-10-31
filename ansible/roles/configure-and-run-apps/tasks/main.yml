@@ -1,0 +1,30 @@
+---
+
+- name: docker login
+  make:
+    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    target: login
+- name: docker pull
+  make:
+    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    target: pull
+- name: docker stop
+  make:
+    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    target: stop
+- name: docker start_db
+  make:
+    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    target: start_db
+- name: docker configure
+  make:
+    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    target: configure
+- name: docker start
+  make:
+    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    target: start
+- name: docker status
+  make:
+    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    target: status

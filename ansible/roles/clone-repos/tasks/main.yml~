@@ -1,0 +1,9 @@
+---
+
+- name: clone release branches
+  git:
+    repo: '{{ item.repo }}'
+    dest: '{{ item.location }}'
+    version: {{ (branch == 'develop') | ternary('develop', 'release/{{ VERSION }}.{{ MINOR }}') }}
+    recursive: yes
+  with_items: '{{ projects[PROJECT].repos }}'

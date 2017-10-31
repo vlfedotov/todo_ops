@@ -1,0 +1,11 @@
+---
+
+- name: Make develop
+  connection: local
+  hosts: localhost
+  vars:
+    PROJECT: "{{ project }}"
+    VERSION: "{{ ver|default(None) }}"
+  roles:
+    # - debug-input-args
+    - clone-repos

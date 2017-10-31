@@ -1,0 +1,13 @@
+---
+
+- name: Make release images
+  connection: local
+  hosts: localhost
+  vars:
+    PROJECT: "{{ project }}"
+    VERSION: "{{ ver }}"
+    MINOR: "{{ minor_ver|default(0) }}"
+  roles:
+    - debug-input-args
+    - clone-repos
+    - make-and-push-images

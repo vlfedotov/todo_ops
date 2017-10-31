@@ -1,0 +1,9 @@
+---
+
+- name: clone repos
+  git:
+    repo: '{{ item.repo }}'
+    dest: '{{ projects[PROJECT].location }}/{{ item.location }}'
+    version: '{{ (ROLE != "test") | ternary(projects[PROJECT].roles[ROLE].branch + "/" + VERSION, projects[PROJECT].roles[ROLE].branch) }}'
+    # recursive: yes
+  with_items: '{{ projects[PROJECT].repos }}'

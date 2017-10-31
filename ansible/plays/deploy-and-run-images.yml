@@ -1,0 +1,15 @@
+---
+
+- name: Pull and run new release
+  hosts: '{{ project }}'
+  vars:
+    PROJECT: "{{ project }}"
+    VERSION: "{{ ver }}"
+    USER: "{{ project }}-{{ role }}"
+
+  roles:
+    - debug-input-args
+    - user-present
+    - run-utils-present
+    - configure-and-run-apps
+#    - configure-nginx
