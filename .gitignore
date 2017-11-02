@@ -9,3 +9,6 @@ TAGS
 
 # projects
 projects/todo/apps
+
+# personal credentials
+projects/todo/.env 

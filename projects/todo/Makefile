@@ -2,6 +2,14 @@ include .env
 
 DOCKER_COMPOSE = "docker/${ROLE}/docker-compose.yml" 
 
+.PHONY: login logout
+
+login:
+	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} # ${DOCKER_REGISTRY} 
+
+logout:
+	docker logout ${DOCKER_REGISTRY}
+
 .PHONY: build up start
 
 build:

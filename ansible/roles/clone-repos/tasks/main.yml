@@ -6,4 +6,5 @@
     dest: '{{ projects[PROJECT].location }}/{{ item.location }}'
     version: '{{ (ROLE == "test") | ternary(projects[PROJECT].roles[ROLE].branch + "/" + VERSION, projects[PROJECT].roles[ROLE].branch) }}'
     recursive: yes
+    force: yes
   with_items: '{{ projects[PROJECT].repos }}'

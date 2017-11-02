@@ -1,17 +1,27 @@
 ---
 
-- name: remove git from docker image if git is set off
+- name: remove git from docker image
   file:
-    path: '{{ item.location }}.git/'
+    path: '{{ item.location }}.git*'
     state: absent
   with_items: '{{ projects[PROJECT].repos }}'
-  when: git == "OFF"
+
+- name: docker login
+  make:
+    chdir: '{{ projects[PROJECT].location }}'
+    target: login
 
 - name: build images and push them to a private repo
   docker_image:
-    path: '{{ item.dockerfile_location }}'
-    name: {{ (docker_registry | split('/') | first == 'hub.docker.com') | ternary('{{ docker_registry }}/{{ item.image }}', '{{ docker_registry }}/{{ PROJECT }}/{{ item.image }}'
+    path: '{{ projects[PROJECT].location }}/{{ item.context }}'
+    dockerfile: '{{ item.dockerfile }}'
+    name: '{{ docker_registry_project }}/{{ item.image }}'
     tag: '{{ VERSION }}.{{ MINOR }}'
     push: yes
     force: yes
   with_items: '{{ projects[PROJECT].dockers }}'
+
+- name: docker logout
+  make:
+    chdir: '{{ projects[PROJECT].location }}'
+    target: logout
