@@ -1,0 +1,11 @@
+---
+
+- name: build develop
+  make:
+    chdir: '{{ projects[PROJECT].location }}'
+    target: build
+
+- name: run develop
+  make:
+    chdir: '{{ projects[PROJECT].location }}'
+    target: start

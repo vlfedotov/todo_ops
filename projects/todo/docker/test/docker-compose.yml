@@ -1,7 +1,0 @@
-version: '3'
-
-services:
-  todo_crm:
-    build:
-      context: ../../
-      dockerfile: docker/test/Dockerfile

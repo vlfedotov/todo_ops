@@ -7,5 +7,5 @@
     PROJECT: "{{ project }}"
     VERSION: "{{ ver|default(None) }}"
   roles:
-    # - debug-input-args
     - clone-repos
+    - build-and-run-develop

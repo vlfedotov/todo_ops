@@ -11,7 +11,7 @@ projects:
       dev:
         git: ON
 #        location: qw
-        branch: develop
+        branch: master
         docker_compose_run: docker-compose.run.yml
         hostport: 8001
       test:
