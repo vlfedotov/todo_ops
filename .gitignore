@@ -6,3 +6,7 @@ TAGS
 .idea
 
 .cache
+
+# projects
+projects/todo/apps/todo_crm
+projects/todo/apps/todo_todo
