@@ -13,7 +13,7 @@ services:
   todo_todo:
     networks:
       - todo-{{ ROLE }}-network
-    image: ${DOCKER_REGISTRY}/${DOCKER_REGISTRY_PROJECT}/todo_todo:${PROJECT_VERSION}
+    image: ${DOCKER_REGISTRY}/${DOCKER_PROJECT}/todo_todo:${PROJECT_VERSION}
     hostname: todo_todo
     environment:
       DEBUG: True

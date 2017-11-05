@@ -1,6 +1,6 @@
 include .env
 
-DOCKER_COMPOSE = "docker/${ROLE}/docker-compose.yml" 
+DOCKER_COMPOSE = "docker/develop/docker-compose.yml" 
 
 .PHONY: login logout
 
@@ -10,7 +10,7 @@ login:
 logout:
 	docker logout ${DOCKER_REGISTRY}
 
-.PHONY: build up start
+.PHONY: build up start restart stop status
 
 build:
 	docker-compose -f ${DOCKER_COMPOSE} build --pull
@@ -26,3 +26,6 @@ restart:
 
 stop:
 	docker-compose -f ${DOCKER_COMPOSE} down
+
+status:
+	docker-compose -f ${DOCKER_COMPOSE} ps
