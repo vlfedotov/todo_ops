@@ -1,5 +1,11 @@
 ---
 
+- name: make and copy env file
+  template:
+    src: env.j2
+    dest: '{{ projects[PROJECT].location }}/.env'
+    mode: 0644
+
 - name: build develop
   make:
     chdir: '{{ projects[PROJECT].location }}'

@@ -2,29 +2,21 @@
 
 - name: docker login
   make:
-    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    chdir: '/home/{{ projects[PROJECT].roles[ROLE].user }}'
     target: login
 - name: docker pull
   make:
-    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    chdir: '/home/{{ projects[PROJECT].roles[ROLE].user }}'
     target: pull
-- name: docker stop
+- name: docker-compose stop
   make:
-    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    chdir: '/home/{{ projects[PROJECT].roles[ROLE].user }}'
     target: stop
-- name: docker start_db
+- name: docker-compose configure
   make:
-    chdir: '/home/{{ projects[PROJECT].test_user }}'
-    target: start_db
-- name: docker configure
-  make:
-    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    chdir: '/home/{{ projects[PROJECT].roles[ROLE].user }}'
     target: configure
-- name: docker start
+- name: docker-compose start
   make:
-    chdir: '/home/{{ projects[PROJECT].test_user }}'
+    chdir: '/home/{{ projects[PROJECT].roles[ROLE].user }}'
     target: start
-- name: docker status
-  make:
-    chdir: '/home/{{ projects[PROJECT].test_user }}'
-    target: status

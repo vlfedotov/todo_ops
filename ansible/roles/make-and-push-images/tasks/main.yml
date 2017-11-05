@@ -2,9 +2,15 @@
 
 - name: remove git from docker image
   file:
-    path: '{{ item.location }}.git*'
+    path: '{{ projects[PROJECT].location }}/{{ item.location }}/.git/'
     state: absent
   with_items: '{{ projects[PROJECT].repos }}'
+
+- name: make and copy env file
+  template:
+    src: env.j2
+    dest: '{{ projects[PROJECT].location }}/.env'
+    mode: 0644
 
 - name: docker login
   make:
@@ -15,8 +21,8 @@
   docker_image:
     path: '{{ projects[PROJECT].location }}/{{ item.context }}'
     dockerfile: '{{ item.dockerfile }}'
-    name: '{{ docker_registry_project }}/{{ item.image }}'
-    tag: '{{ VERSION }}.{{ MINOR }}'
+    name: '{{ projects[PROJECT].docker_project }}/{{ item.image }}'
+    tag: '{{ (ROLE=="test") | ternary(VERSION, projects[PROJECT].roles[ROLE].branch) }}'
     push: yes
     force: yes
   with_items: '{{ projects[PROJECT].dockers }}'

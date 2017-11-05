@@ -2,6 +2,6 @@
 
 - name: user presence
   user:
-    name: '{{ projects[PROJECT][ROLE + "_user"] }}'
+    name: '{{ projects[PROJECT].roles[ROLE].user }}'
     groups: docker
     append: yes

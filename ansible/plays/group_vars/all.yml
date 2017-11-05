@@ -3,9 +3,9 @@
 docker_registry: hub.docker.com
 projects:
   todo:
-    docker_project: user
-    docker_user: user
-    docker_password: password
+    docker_project: u
+    docker_user: u
+    docker_password: u
     location: ../../projects/todo
     release:
       docker: docker

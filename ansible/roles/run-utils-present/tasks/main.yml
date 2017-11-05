@@ -1,28 +1,23 @@
 ---
 
 - name: copy docker-compose
-  copy:
-    src: '{{ projects[PROJECT].docker_compose_run }}'
-    dest: '/home/{{ projects[PROJECT][ROLE + "_user"] }}/docker-compose.prod.yml'
-    owner: '{{ projects[PROJECT][ROLE + "_user"] }}'
-    group: '{{ projects[PROJECT][ROLE + "_user"] }}'
+  template:
+    src: '{{ projects[PROJECT].location }}/{{ projects[PROJECT].release.docker }}/{{ projects[PROJECT].roles[ROLE] }}/docker-compose.run.j2'
+    dest: '/home/{{ projects[PROJECT].roles[ROLE].user }}/docker-compose.yml'
+    owner: '{{ projects[PROJECT].roles[ROLE].user }}'
+    group: '{{ projects[PROJECT].roles[ROLE].user }}'
     mode: 0644
 - name: copy Makefile
   copy:
-    src: '{{ projects[PROJECT].makefile }}'
-    dest: '/home/{{ projects[PROJECT][ROLE + "_user"] }}/Makefile'
-    owner: '{{ projects[PROJECT][ROLE + "_user"] }}'
-    group: '{{ projects[PROJECT][ROLE + "_user"] }}'
+    src: '{{ projects[PROJECT].location }}/{{ projects[PROJECT].release.makefile }}'
+    dest: '/home/{{ projects[PROJECT].roles[ROLE].user }}/Makefile'
+    owner: '{{ projects[PROJECT].roles[ROLE].user }}'
+    group: '{{ projects[PROJECT].roles[ROLE].user }}'
     mode: 0644
-#- name: make env file
-#  shell: |
-#    echo 'ROLE={{ ROLE }}
-#          VERSION={{ VERSION }}
-#          HOST-PORT={{ projects[PROJECT]["hostpost_" + ROLE] }}' > "{{ projects[PROJECT].location }}/.env"
-- name: copy env file
-  copy:
-    src: '{{ projects[PROJECT].env_file }}'
-    dest: '/home/{{ projects[PROJECT][ROLE + "_user"] }}/.env'
-    owner: '{{ projects[PROJECT][ROLE + "_user"] }}'
-    group: '{{ projects[PROJECT][ROLE + "_user"] }}'
+- name: make and copy env file
+  template:
+    src: env.j2
+    dest: '/home/{{ projects[PROJECT].roles[ROLE].user }}/.env'
+    owner: '{{ projects[PROJECT].roles[ROLE].user }}'
+    group: '{{ projects[PROJECT].roles[ROLE].user }}'
     mode: 0644
