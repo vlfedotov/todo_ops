@@ -4,10 +4,10 @@ version: '3'
 services:
   postman_test:
     image: postman/newman_alpine33
-    command: run ""
-  depends_on:
-    - todo_todo
-    - todo_crm
+    command: run "https://www.getpostman.com/collections/32a2748b059f7b77b3e1"
+    depends_on:
+      - todo_todo
+      - todo_crm
 
   todo_todo:
     build:
