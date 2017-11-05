@@ -1,13 +1,13 @@
 TEST_DOCKER = "projects/todo/docker/ci_api/docker-compose.yml" 
 
-.PHONY: test-build test
+.PHONY: .get-branch-name .clone-repos test-build test
+
+.get-branch-name:
+	echo "BRANCH=`git rev-parse --abbrev-ref HEAD`" > .env
 
 .clone-repos:
-	git clone git@github.com:vlfedotov/todo_crm.git projects/todo/apps/todo_crm
-	git clone git@github.com:vlfedotov/todo_todo.git projects/todo/apps/todo_todo
-
-.checkout-branch:
-	git co lalala
+	git clone git@github.com:vlfedotov/todo_crm.git@`git rev-parse --abbrev-ref HEAD` projects/todo/apps/todo_crm
+	git clone git@github.com:vlfedotov/todo_todo.git@`git rev-parse --abbrev-ref HEAD` projects/todo/apps/todo_todo
 
 test-build:
 	docker-compose -f ${TEST_DOCKER} build --pull

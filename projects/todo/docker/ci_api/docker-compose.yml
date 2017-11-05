@@ -1,0 +1,30 @@
+version: '3'
+
+
+services:
+  postman_test:
+    image: postman/newman_alpine33
+    command: run ""
+  depends_on:
+    - todo_todo
+    - todo_crm
+
+  todo_todo:
+    build:
+      context: ../../apps/todo_todo
+      dockerfile: docker/ci/Dockerfile
+    hostname: todo_todo
+    ports:
+      - 8082:8080
+    command: ['python', 'run_server.py']
+  todo_crm:
+    build:
+      context: ../../apps/todo_crm
+      dockerfile: docker/ci/Dockerfile
+    hostname: todo_crm
+    ports:
+      - 8080:8080
+    environment:
+      TODO_HOST: 'http://todo_todo:8080'
+    command: ['python', 'run_server.py']
+
