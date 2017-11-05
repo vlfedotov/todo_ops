@@ -1,15 +1,18 @@
 ---
 
 docker_registry: hub.docker.com
-docker_registry_project: vlfedotov
 projects:
   todo:
+    docker_project: user
+    docker_user: user
+    docker_password: password
     location: ../../projects/todo
-    makefile: ../../projects/todo/Makefile
+    release:
+      docker: docker
+      makefile: docker/Makefile
     roles:
       dev:
         branch: master
-        docker_compose_run: docker-compose.run.yml
         hostport: 8001
       test:
         user: todo-test

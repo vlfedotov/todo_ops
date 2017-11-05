@@ -4,12 +4,9 @@
   hosts: '{{ project }}'
   vars:
     PROJECT: "{{ project }}"
-    VERSION: "{{ ver }}"
-    USER: "{{ project }}-{{ role }}"
+    VERSION: "{{ ver|default(0) }}"
 
   roles:
-    - debug-input-args
     - user-present
     - run-utils-present
     - configure-and-run-apps
-#    - configure-nginx
