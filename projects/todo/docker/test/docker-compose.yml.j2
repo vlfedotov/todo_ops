@@ -1,0 +1,47 @@
+version: '3'
+
+networks:
+  todo-{{ ROLE }}-network:
+
+volumes:
+  todo-todo-static:
+    driver: local
+  todo-crm-static:
+    driver: local
+
+services:
+  todo_todo:
+    networks:
+      - todo-{{ ROLE }}-network
+    image: ${DOCKER_REGISTRY}/${DOCKER_REGISTRY_PROJECT}/todo_todo:${PROJECT_VERSION}
+    hostname: todo_todo
+    environment:
+      DEBUG: True
+      STATIC_ROOT: /opt/app/static
+    volumes:
+      - todo-todo-static:/opt/app/static
+    command: 'gunicorn wsgi:application --bind 0.0.0.0:8082 --workers 5 --log-level=info --capture-output'
+  todo_crm:
+    networks:
+      - todo-{{ ROLE }}-network
+    image: ${DOCKER_REGISTRY}/${DOCKER_REGISTRY_PROJECT}/todo_crm:${PROJECT_VERSION}
+    hostname: todo_crm
+    environment:
+      DEBUG: True
+      TODO_HOST: 'http://todo_todo:8080'
+      STATIC_ROOT: /opt/app/static
+    volumes:
+      - todo-crm-static:/opt/app/static
+    command: 'gunicorn wsgi:application --bind 0.0.0.0:8080 --workers 5 --log-level=info --capture-output'
+  todo_web:
+    networks:
+      - todo-{{ ROLE }}-network
+    image: nginx:lastest
+    ports:
+      - "${HOSTPORT}:80"
+    depends_on:
+      - todo_todo
+      - todo_crm
+    volumes:
+      - todo-crm-static:/opt/todo-crm-static
+      - todo-todo-static:/opt/todo-todo-static
